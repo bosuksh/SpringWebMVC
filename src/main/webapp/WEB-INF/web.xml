@@ -3,7 +3,16 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
+  <display-name>Web Application</display-name>
+
+  <context-param>
+    <param-name>contextClass</param-name>
+    <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+  </context-param>
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>me.doflamingo.AppConfig</param-value>
+  </context-param>
   <filter>
     <filter-name>myfilter</filter-name>
     <filter-class>me.doflamingo.MyFilter</filter-class>
@@ -13,7 +22,7 @@
     <servlet-name>hello</servlet-name>
   </filter-mapping>
   <listener>
-    <listener-class>me.doflamingo.MyListener</listener-class>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   <servlet>
     <servlet-name>hello</servlet-name>
