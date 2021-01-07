@@ -25,9 +25,25 @@
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   <servlet>
+    <servlet-name>app</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextClass</param-name>
+      <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </init-param>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>me.doflamingo.WebConfig</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
     <servlet-name>hello</servlet-name>
     <servlet-class>me.doflamingo.HelloServlet</servlet-class>
   </servlet>
+  <servlet-mapping>
+    <servlet-name>app</servlet-name>
+    <url-pattern>/app/*</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>hello</servlet-name>
     <url-pattern>/hello</url-pattern>
