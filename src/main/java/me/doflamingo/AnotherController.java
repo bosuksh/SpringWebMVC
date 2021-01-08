@@ -11,6 +11,6 @@ public class AnotherController implements Controller {
 
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    return new ModelAndView("/WEB-INF/another.jsp");
+    return new ModelAndView("another");
   }
 }
