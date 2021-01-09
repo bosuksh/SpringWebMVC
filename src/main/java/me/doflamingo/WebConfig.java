@@ -5,17 +5,18 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @ComponentScan(useDefaultFilters = false , includeFilters = @ComponentScan.Filter(Controller.class))
-public class WebConfig {
-
-  @Bean
-  public ViewResolver viewResolver() {
-    InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-    viewResolver.setPrefix("/WEB-INF/");
-    viewResolver.setSuffix(".jsp");
-    return viewResolver;
+@EnableWebMvc
+public class WebConfig implements WebMvcConfigurer {
+  @Override
+  public void configureViewResolvers(ViewResolverRegistry registry) {
+    registry.jsp("/WEB-INF/",".jsp");
   }
+
 }
