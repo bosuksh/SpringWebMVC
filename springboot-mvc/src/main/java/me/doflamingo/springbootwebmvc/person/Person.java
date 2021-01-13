@@ -1,4 +1,4 @@
-package me.doflamingo.springbootwebmvc;
+package me.doflamingo.springbootwebmvc.person;
 
 public class Person {
   String name;

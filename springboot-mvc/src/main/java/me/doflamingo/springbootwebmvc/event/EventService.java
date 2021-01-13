@@ -1,4 +1,4 @@
-package me.doflamingo.springbootwebmvc;
+package me.doflamingo.springbootwebmvc.event;
 
 import org.springframework.stereotype.Service;
 

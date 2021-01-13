@@ -1,17 +1,16 @@
 package me.doflamingo.springbootwebmvc;
 
+import me.doflamingo.springbootwebmvc.event.EventService;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
-@ExtendWith(SpringExtension.class)
 @WebMvcTest
 class SampleControllerTest {
 
@@ -22,7 +21,7 @@ class SampleControllerTest {
   public void helloWithPath() throws Exception {
     mockMvc.perform(get("/hello/name"))
       .andDo(print())
-      .andExpect(content().string("hello name"));
+      .andExpect(content().string("Hello name"));
   }
 
   @Test
@@ -30,7 +29,7 @@ class SampleControllerTest {
     mockMvc.perform(get("/hello")
       .param("name", "name"))
       .andDo(print())
-      .andExpect(content().string("hello name"));
+      .andExpect(content().string("Hello name"));
   }
 
 }
