@@ -17,6 +17,9 @@ class SampleControllerTest {
   @Autowired
   private MockMvc mockMvc;
 
+  @MockBean
+  private EventService eventService;
+
   @Test
   public void helloWithPath() throws Exception {
     mockMvc.perform(get("/hello/name"))
