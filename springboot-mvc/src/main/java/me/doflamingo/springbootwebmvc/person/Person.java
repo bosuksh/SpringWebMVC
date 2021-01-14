@@ -1,13 +1,19 @@
 package me.doflamingo.springbootwebmvc.person;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
+@Getter @Setter
 public class Person {
-  String name;
 
-  public String getName() {
-    return name;
-  }
+  @Id @GeneratedValue
+  private Long id;
 
-  public void setName(String name) {
-    this.name = name;
-  }
+  private String name;
+
 }

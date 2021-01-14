@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import java.text.ParseException;
 import java.util.Locale;
 
-@Component
 public class PersonFormatter implements Formatter<Person> {
   @Override
   public Person parse(String s, Locale locale) throws ParseException {
