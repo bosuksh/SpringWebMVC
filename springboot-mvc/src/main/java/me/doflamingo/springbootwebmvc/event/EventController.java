@@ -1,7 +1,5 @@
-package me.doflamingo.springbootwebmvc;
+package me.doflamingo.springbootwebmvc.event;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class EventController {
 
-  @Autowired
   private EventService eventService;
+
+  public EventController(EventService eventService) {
+    this.eventService = eventService;
+  }
 
   @GetMapping("/events")
   public String getList(Model model) {
