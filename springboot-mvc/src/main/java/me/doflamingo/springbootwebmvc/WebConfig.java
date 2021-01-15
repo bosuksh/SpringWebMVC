@@ -9,6 +9,7 @@ import org.springframework.http.CacheControl;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.concurrent.TimeUnit;
@@ -16,11 +17,22 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
+
   @Bean
   public Jaxb2Marshaller jaxb2Marshaller() {
     Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
     marshaller.setPackagesToScan(Person.class.getPackageName());
     return marshaller;
+  }
+
+
+  /**
+   * GetMapping 없이 view와 viewController를 연결해주는 효과가 있다.
+   * @param registry
+   */
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+    registry.addViewController("/hi").setViewName("index.html");
   }
 
   @Override
