@@ -40,8 +40,13 @@ public class SampleController {
     return person;
   }
   @GetMapping("/mapMessage")
-  public Map<String,String> mapMessage(@RequestBody HashMap<String, String> map){
+  public Map<String,String> mapMessage(@RequestBody HashMap<String, String> map) {
     System.out.println(map.toString());
     return map;
+  }
+
+  @GetMapping("/xmlMessage")
+  public Person xmlMessage(@RequestBody Person person) {
+    return person;
   }
 }

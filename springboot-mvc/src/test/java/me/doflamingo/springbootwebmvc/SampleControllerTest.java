@@ -13,7 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.test.web.servlet.MockMvc;
+
+import javax.xml.transform.Result;
+import javax.xml.transform.stream.StreamResult;
+import java.io.StringWriter;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -34,6 +39,9 @@ class SampleControllerTest {
 
   @Autowired
   private ObjectMapper objectMapper;
+
+  @Autowired
+  private Jaxb2Marshaller marshaller;
 
   private Long id;
 
@@ -106,7 +114,29 @@ class SampleControllerTest {
       .contentType(MediaType.APPLICATION_JSON)
       .accept(MediaType.APPLICATION_JSON))
       .andDo(print())
-      .andExpect(status().isOk());
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.name").value("Doflamingo"))
+      .andExpect(jsonPath("$.id").value(100));
+  }
+
+  @Test
+  public void xmlMessage() throws Exception {
+    Person person = new Person();
+    person.setId(100L);
+    person.setName("Doflamingo");
+
+    StringWriter stringWriter = new StringWriter();
+    Result result = new StreamResult(stringWriter);
+    marshaller.marshal(person,result);
+    String xmlString = stringWriter.toString();
+    mockMvc.perform(get("/jsonMessage")
+      .content(xmlString)
+      .contentType(MediaType.APPLICATION_XML)
+      .accept(MediaType.APPLICATION_XML))
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(xpath("person/id").string("100"))
+      .andExpect(xpath("person/name").string("Doflamingo"));
   }
 
 }
