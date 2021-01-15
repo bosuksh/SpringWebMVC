@@ -1,9 +1,9 @@
 package me.doflamingo.springbootwebmvc.person;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class SampleController {
@@ -29,5 +29,19 @@ public class SampleController {
   @GetMapping("/hello")
   public String helloByParam(@RequestParam("id") Person person) {
     return "Hello " + person.getName();
+  }
+
+  @GetMapping("/message")
+  public String message(@RequestBody String message) {
+    return message;
+  }
+  @GetMapping("/jsonMessage")
+  public Person jsonMessage(@RequestBody Person person) {
+    return person;
+  }
+  @GetMapping("/mapMessage")
+  public Map<String,String> mapMessage(@RequestBody HashMap<String, String> map){
+    System.out.println(map.toString());
+    return map;
   }
 }

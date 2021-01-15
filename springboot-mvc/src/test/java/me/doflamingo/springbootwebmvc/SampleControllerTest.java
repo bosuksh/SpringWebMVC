@@ -1,5 +1,6 @@
 package me.doflamingo.springbootwebmvc;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import me.doflamingo.springbootwebmvc.event.EventService;
 import me.doflamingo.springbootwebmvc.person.Person;
 import me.doflamingo.springbootwebmvc.person.PersonRepository;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -29,6 +31,9 @@ class SampleControllerTest {
 
   @Autowired
   private PersonRepository personRepository;
+
+  @Autowired
+  private ObjectMapper objectMapper;
 
   private Long id;
 
@@ -70,6 +75,38 @@ class SampleControllerTest {
       .andExpect(status().isOk())
       .andExpect(content().string(Matchers.containsString("Hello Mobile")))
       .andExpect(header().exists(HttpHeaders.CACHE_CONTROL));
+  }
+
+  @Test
+  public void messageConverterTest() throws Exception {
+    mockMvc.perform(get("/message")
+      .content("hello"))
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(content().string("hello"));
+  }
+
+  @Test
+  public void mapMessageConverterTest() throws Exception {
+    mockMvc.perform(get("/mapMessage")
+      .content("{\"command\":\"hello\"}")
+      .contentType(MediaType.APPLICATION_JSON))
+      .andDo(print())
+      .andExpect(status().isOk());
+  }
+
+  @Test
+  public void jsonMessage() throws Exception {
+    Person person = new Person();
+    person.setId(100L);
+    person.setName("Doflamingo");
+    String jsonString = objectMapper.writeValueAsString(person);
+    mockMvc.perform(get("/jsonMessage")
+      .content(jsonString)
+      .contentType(MediaType.APPLICATION_JSON)
+      .accept(MediaType.APPLICATION_JSON))
+      .andDo(print())
+      .andExpect(status().isOk());
   }
 
 }
