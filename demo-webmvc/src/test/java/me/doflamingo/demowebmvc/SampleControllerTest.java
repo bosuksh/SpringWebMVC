@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -64,5 +65,43 @@ class SampleControllerTest {
     this.mockMvc.perform(delete("/hi"))
       .andDo(print())
       .andExpect(status().isMethodNotAllowed());
+  }
+
+  @Test
+  public void URI_PATTERN_ONE() throws Exception {
+    this.mockMvc.perform(get("/urlPattern1"))
+      .andDo(print())
+      .andExpect(status().isOk());
+  }
+
+  @Test
+  public void URI_PATTERN_TWO() throws Exception {
+    this.mockMvc.perform(get("/urlPattern2/2"))
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(content().string("urlPattern2"))
+    ;
+  }
+
+  @Test
+  public void URI_PATTERN_THREE() throws Exception {
+    this.mockMvc.perform(get("/urlPattern3/123"))
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(content().string("urlPattern3"))
+    ;
+    this.mockMvc.perform(get("/urlPattern3/123/hi"))
+      .andDo(print())
+      .andExpect(status().isNotFound())
+    ;
+  }
+
+  @Test
+  public void URI_PATTERN_FOUR() throws Exception {
+    this.mockMvc.perform(get("/urlPattern4/123/hi"))
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(content().string("urlPattern4"))
+    ;
   }
 }

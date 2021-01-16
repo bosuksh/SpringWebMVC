@@ -1,10 +1,7 @@
 package me.doflamingo.demowebmvc;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class SampleController {
@@ -20,4 +17,23 @@ public class SampleController {
   public String hi() {
     return "hi";
   }
+
+  @GetMapping("/urlPattern?")
+  @ResponseBody
+  public String urlPattern1() {
+    return "urlPattern";
+  }
+
+  @GetMapping("/urlPattern3/*")
+  @ResponseBody
+  public String urlPattern3() {
+    return "urlPattern3";
+  }
+
+  @GetMapping("/urlPattern4/**")
+  @ResponseBody
+  public String urlPattern4() {
+    return "urlPattern4";
+  }
+
 }
