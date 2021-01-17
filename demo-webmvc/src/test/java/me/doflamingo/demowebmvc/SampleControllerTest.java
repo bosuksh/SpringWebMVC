@@ -136,4 +136,14 @@ class SampleControllerTest {
           containsString("OPTIONS"))));
   }
 
+  @Test
+  public void custom_annotation_test() throws Exception {
+    //given
+    //when
+    this.mockMvc.perform(get("/custom"))
+    //then
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(content().string("custom"));
+  }
 }

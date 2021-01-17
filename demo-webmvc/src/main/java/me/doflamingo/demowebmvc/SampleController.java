@@ -42,4 +42,9 @@ public class SampleController {
     return "urlPattern4";
   }
 
+  @GetCustomAnnotationMapping
+  @ResponseBody
+  public String custom() {
+    return "custom";
+  }
 }
