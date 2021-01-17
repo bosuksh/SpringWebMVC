@@ -4,14 +4,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest
@@ -104,4 +106,34 @@ class SampleControllerTest {
       .andExpect(content().string("urlPattern4"))
     ;
   }
+
+  @Test
+  public void HEAD_TEST() throws Exception {
+    //given
+
+    //when
+    this.mockMvc.perform(head("/hello"))
+      .andDo(print())
+    //then
+      .andExpect(status().isOk())
+      ;
+  }
+
+  @Test
+  public void OPTIONS_TEST() throws Exception {
+    //given
+
+    //when
+    this.mockMvc.perform(options("/hello"))
+      .andDo(print())
+    //then
+      .andExpect(status().isOk())
+      .andExpect(header().stringValues(HttpHeaders.ALLOW,
+        hasItems(
+          containsString("GET"),
+          containsString("POST"),
+          containsString("HEAD"),
+          containsString("OPTIONS"))));
+  }
+
 }

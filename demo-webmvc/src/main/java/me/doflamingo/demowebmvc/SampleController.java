@@ -6,10 +6,16 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class SampleController {
 
-  @RequestMapping("/hello")
+  @GetMapping("/hello")
   @ResponseBody
   public String hello() {
     return "hello";
+  }
+
+  @PostMapping("/hello")
+  @ResponseBody
+  public String hello2() {
+    return "hello2";
   }
 
   @RequestMapping(value = "/hi", method = {RequestMethod.GET, RequestMethod.PATCH})
