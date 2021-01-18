@@ -6,16 +6,22 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class SampleController {
 
-  @GetMapping("/hello")
+  @RequestMapping("/hello")
   @ResponseBody
   public String hello() {
     return "hello";
   }
 
+  @GetMapping("/hello")
+  @ResponseBody
+  public String getHello() {
+    return "getHello";
+  }
+
   @PostMapping("/hello")
   @ResponseBody
-  public String hello2() {
-    return "hello2";
+  public String postHello() {
+    return "postHello";
   }
 
   @RequestMapping(value = "/hi", method = {RequestMethod.GET, RequestMethod.PATCH})
@@ -28,6 +34,12 @@ public class SampleController {
   @ResponseBody
   public String urlPattern1() {
     return "urlPattern";
+  }
+
+  @GetMapping("/urlPattern2/?")
+  @ResponseBody
+  public String urlPattern2() {
+    return "urlPattern2";
   }
 
   @GetMapping("/urlPattern3/*")
