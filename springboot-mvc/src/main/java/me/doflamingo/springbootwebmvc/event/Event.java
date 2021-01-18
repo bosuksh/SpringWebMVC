@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class Event {
+  private Integer id;
   private String name;
   private int limitOfEnrollment;
   private LocalDateTime startDateTime;

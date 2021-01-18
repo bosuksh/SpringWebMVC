@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
@@ -110,6 +111,25 @@ class EventControllerTest {
         .accept(MediaType.APPLICATION_JSON))
       .andDo(print())
       .andExpect(status().isOk())
+    ;
+  }
+
+  @Test
+  public void getEvent() throws Exception {
+    this.mockMvc.perform(get("/events/1"))
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.id").value(1))
+    ;
+  }
+
+  @Test
+  public void getEvent_with_matrixVariable() throws Exception {
+    this.mockMvc.perform(get("/events/1;name=sh"))
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.id").value(1))
+      .andExpect(jsonPath("$.name").value("sh"))
     ;
   }
 }

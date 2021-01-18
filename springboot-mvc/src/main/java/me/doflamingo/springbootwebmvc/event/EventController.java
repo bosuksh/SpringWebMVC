@@ -14,21 +14,24 @@ public class EventController {
     this.eventService = eventService;
   }
 
-  @GetMapping("/event")
+  @GetMapping("/events")
   public String getList(Model model) {
     model.addAttribute("events", eventService.getList());
     return "events/list";
   }
 
-  @GetMapping("/events")
+  @GetMapping("/events/{id}")
   @ResponseBody
-  public String getEvents(){
-    return "events";
+  public Event getEvents(@PathVariable Integer id, @MatrixVariable(required = false) String name){
+    Event event = new Event();
+    event.setId(1);
+    event.setName(name);
+    return event;
   }
 
-  @RequestMapping(value = "/events/?", method = {RequestMethod.GET, RequestMethod.DELETE})
+  @DeleteMapping("/events/{id}")
   @ResponseBody
-  public String getEventsWithOneCharacter(){
-    return "events";
+  public String removeEvents(@PathVariable Integer id){
+    return "event removed";
   }
 }
