@@ -51,7 +51,7 @@ class EventControllerTest {
   }
 
   @Test
-  public void eventTest_with_contentType_and_acceptHeader() throws Exception {
+  public void create_eventTest_with_contentType_and_acceptHeader() throws Exception {
     mockMvc.perform(post("/events")
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))
@@ -83,7 +83,7 @@ class EventControllerTest {
   }
 
   @Test
-  public void put_eventTest_with_contentType_and_acceptHeader() throws Exception {
+  public void update_eventTest_with_contentType_and_acceptHeader() throws Exception {
     mockMvc.perform(put("/events/1")
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))

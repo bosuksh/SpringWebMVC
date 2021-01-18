@@ -31,22 +31,4 @@ public class EventController {
   public String getEventsWithOneCharacter(){
     return "events";
   }
-
-  @PostMapping(
-    value = "/events",
-    consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseBody
-  public String postEventsWithJson() {
-    return "/events";
-  }
-
-  @PutMapping(
-    value = "/events/{id}",
-    consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
-  @ResponseBody
-  public String putEventsWithJson(@PathVariable Long id) {
-    return "/events "+ id;
-  }
 }
