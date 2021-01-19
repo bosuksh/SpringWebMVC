@@ -9,8 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest
 class EventControllerTest {
@@ -148,6 +147,15 @@ class EventControllerTest {
       .andDo(print())
       .andExpect(status().isOk())
       .andExpect(jsonPath("$.limitOfEnrollment").value("5"))
+    ;
+  }
+
+  @Test
+  public void eventFormTest() throws Exception {
+    this.mockMvc.perform(get("/events/form"))
+      .andDo(print())
+      .andExpect(view().name("events/eventForm"))
+      .andExpect(model().attributeExists("event"))
     ;
   }
 }
