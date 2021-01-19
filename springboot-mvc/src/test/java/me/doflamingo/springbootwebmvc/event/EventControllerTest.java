@@ -144,7 +144,7 @@ class EventControllerTest {
 
     this.mockMvc.perform(post("/event")
         .param("name", "hello")
-        .param("limit", "5"))
+        .param("limitOfEnrollment", "5"))
       .andDo(print())
       .andExpect(status().isOk())
       .andExpect(jsonPath("$.limitOfEnrollment").value("5"))

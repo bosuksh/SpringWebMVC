@@ -50,8 +50,16 @@ public class EventController {
   public Event creatEventWitParam(@RequestParam Map<String, String> map) {
     Event event = new Event();
     event.setName(map.get("name"));
-    event.setLimitOfEnrollment(Integer.valueOf(map.get("limit")));
+    event.setLimitOfEnrollment(Integer.valueOf(map.get("limitOfEnrollment")));
     return event;
+  }
+
+  @GetMapping("/events/form")
+  public String eventsForm(Model model) {
+    Event event = new Event();
+    event.setLimitOfEnrollment(10);
+    model.addAttribute("event", event);
+    return "events/eventForm";
   }
 
 }
