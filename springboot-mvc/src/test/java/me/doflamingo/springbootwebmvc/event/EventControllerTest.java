@@ -132,4 +132,22 @@ class EventControllerTest {
       .andExpect(jsonPath("$.name").value("sh"))
     ;
   }
+
+  @Test
+  public void createEvent_with_parameter() throws Exception {
+    this.mockMvc.perform(post("/events")
+        .param("name", "hello"))
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.name").value("hello"))
+    ;
+
+    this.mockMvc.perform(post("/event")
+        .param("name", "hello")
+        .param("limit", "5"))
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("$.limitOfEnrollment").value("5"))
+    ;
+  }
 }

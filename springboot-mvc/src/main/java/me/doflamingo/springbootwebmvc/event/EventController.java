@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Controller
 public class EventController {
 
@@ -34,4 +36,22 @@ public class EventController {
   public String removeEvents(@PathVariable Integer id){
     return "event removed";
   }
+
+  @PostMapping("/events")
+  @ResponseBody
+  public Event creatEvent(@RequestParam String name) {
+    Event event = new Event();
+    event.setName(name);
+    return event;
+  }
+
+  @PostMapping("/event")
+  @ResponseBody
+  public Event creatEventWitParam(@RequestParam Map<String, String> map) {
+    Event event = new Event();
+    event.setName(map.get("name"));
+    event.setLimitOfEnrollment(Integer.valueOf(map.get("limit")));
+    return event;
+  }
+
 }
