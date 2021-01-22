@@ -4,6 +4,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -41,7 +42,7 @@ public class EventController {
 
   @PostMapping("/events")
   @ResponseBody
-  public Event creatEvent(@Valid @ModelAttribute Event event, BindingResult bindingResult) {
+  public Event creatEvent(@Validated(Event.ValidateName.class) @ModelAttribute Event event, BindingResult bindingResult) {
     if(bindingResult.hasErrors()) {
       System.out.println("===========");
       bindingResult.getAllErrors().forEach(System.out::println);
@@ -54,7 +55,7 @@ public class EventController {
   public Event creatEventWitParam(@RequestParam Map<String, String> map) {
     Event event = new Event();
     event.setName(map.get("name"));
-    event.setLimitOfEnrollment(Integer.valueOf(map.get("limitOfEnrollment")));
+    event.setLimitOfEnrollment(Integer.parseInt(map.get("limitOfEnrollment")));
     return event;
   }
 
