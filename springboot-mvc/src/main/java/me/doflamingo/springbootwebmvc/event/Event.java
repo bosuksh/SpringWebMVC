@@ -12,12 +12,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class Event {
-  interface ValidateName{}
-  interface ValidateNumber{}
+
   private Integer id;
-  @NotBlank(groups = ValidateName.class)
+  @NotBlank(message = "Name must not be blank.")
   private String name;
-  @Min(value = 0,groups = ValidateNumber.class)
+  @Min(value = 0, message = "Limit of Enrollment must be larger than 0.")
   private int limitOfEnrollment;
   private LocalDateTime startDateTime;
   private LocalDateTime endDateTime;

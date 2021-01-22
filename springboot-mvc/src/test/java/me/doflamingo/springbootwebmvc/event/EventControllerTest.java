@@ -165,6 +165,7 @@ class EventControllerTest {
       .param("limitOfEnrollment","hi"))
       .andDo(print())
       .andExpect(status().isOk())
+      .andExpect(model().hasErrors())
     ;
 
     this.mockMvc.perform(post("/events")

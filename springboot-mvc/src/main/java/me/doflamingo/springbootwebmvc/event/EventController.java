@@ -1,5 +1,6 @@
 package me.doflamingo.springbootwebmvc.event;
 
+import org.h2.engine.Mode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -19,8 +22,7 @@ public class EventController {
     this.eventService = eventService;
   }
 
-  @GetMapping("/events")
-  public String getList(Model model) {
+  @GetMapping("/events") public String getList(Model model) {
     model.addAttribute("events", eventService.getList());
     return "events/list";
   }
@@ -41,13 +43,11 @@ public class EventController {
   }
 
   @PostMapping("/events")
-  @ResponseBody
-  public Event creatEvent(@Validated(Event.ValidateName.class) @ModelAttribute Event event, BindingResult bindingResult) {
+  public String creatEvent(@Validated @ModelAttribute Event event, BindingResult bindingResult) {
     if(bindingResult.hasErrors()) {
-      System.out.println("===========");
-      bindingResult.getAllErrors().forEach(System.out::println);
+      return "events/eventForm";
     }
-    return event;
+    return "redirect:events/list";
   }
 
   @PostMapping("/event")
@@ -65,6 +65,19 @@ public class EventController {
     event.setLimitOfEnrollment(10);
     model.addAttribute("event", event);
     return "events/eventForm";
+  }
+
+  @GetMapping("/events/list")
+  public String getEventList(Model model) {
+
+    Event event = new Event();
+    event.setName("spring");
+    event.setLimitOfEnrollment(10);
+    List<Event> eventList = new ArrayList<>();
+    eventList.add(event);
+
+    model.addAttribute("eventList", eventList);
+    return "events/list";
   }
 
 }
