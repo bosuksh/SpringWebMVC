@@ -7,13 +7,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Controller
+@SessionAttributes("event")
 public class EventController {
 
   private EventService eventService;
@@ -43,8 +46,11 @@ public class EventController {
   }
 
   @PostMapping("/events")
-  public String creatEvent(@Validated @ModelAttribute Event event, BindingResult bindingResult) {
+  public String creatEvent(@Validated @ModelAttribute Event event,
+                           BindingResult bindingResult,
+                           SessionStatus sessionStatus) {
     if(bindingResult.hasErrors()) {
+      sessionStatus.setComplete();
       return "events/eventForm";
     }
     return "redirect:events/list";
@@ -60,7 +66,7 @@ public class EventController {
   }
 
   @GetMapping("/events/form")
-  public String eventsForm(Model model) {
+  public String eventsForm(Model model, HttpSession httpSession ) {
     Event event = new Event();
     event.setLimitOfEnrollment(10);
     model.addAttribute("event", event);
