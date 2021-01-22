@@ -3,8 +3,10 @@ package me.doflamingo.springbootwebmvc.event;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
@@ -39,9 +41,11 @@ public class EventController {
 
   @PostMapping("/events")
   @ResponseBody
-  public Event creatEvent(@RequestParam String name) {
-    Event event = new Event();
-    event.setName(name);
+  public Event creatEvent(@Valid @ModelAttribute Event event, BindingResult bindingResult) {
+    if(bindingResult.hasErrors()) {
+      System.out.println("===========");
+      bindingResult.getAllErrors().forEach(System.out::println);
+    }
     return event;
   }
 

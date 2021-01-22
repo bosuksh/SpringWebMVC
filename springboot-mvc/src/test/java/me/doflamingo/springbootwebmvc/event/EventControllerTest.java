@@ -158,4 +158,21 @@ class EventControllerTest {
       .andExpect(model().attributeExists("event"))
     ;
   }
+
+  @Test
+  public void bindingTest() throws Exception {
+    this.mockMvc.perform(post("/events?name=hello")
+      .param("limitOfEnrollment","hi"))
+      .andDo(print())
+      .andExpect(status().isOk())
+    ;
+
+    this.mockMvc.perform(post("/events")
+      .param("name","hello")
+      .param("limitOfEnrollment", "-10"))
+      .andDo(print())
+      .andExpect(status().isOk())
+    ;
+
+  }
 }
