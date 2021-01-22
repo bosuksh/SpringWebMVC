@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +72,8 @@ public class EventController {
   }
 
   @GetMapping("/events/list")
-  public String getEventList(Model model, SessionStatus sessionStatus) {
+  public String getEventList(Model model, SessionStatus sessionStatus, @SessionAttribute("visitTime") LocalDateTime visitTime) {
+    System.out.println(visitTime);
     if(model.containsAttribute("event")) {
       Event event = (Event) model.getAttribute("event");
       List<Event> eventList = new ArrayList<>();

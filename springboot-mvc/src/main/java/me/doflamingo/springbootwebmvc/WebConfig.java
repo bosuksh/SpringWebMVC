@@ -1,5 +1,6 @@
 package me.doflamingo.springbootwebmvc;
 
+import me.doflamingo.springbootwebmvc.event.VisitTimeInterceptor;
 import me.doflamingo.springbootwebmvc.person.AnotherInterceptor;
 import me.doflamingo.springbootwebmvc.person.GreetingInterceptor;
 import me.doflamingo.springbootwebmvc.person.Person;
@@ -39,6 +40,7 @@ public class WebConfig implements WebMvcConfigurer {
     registry.addInterceptor(new AnotherInterceptor())
       .order(0)
       .addPathPatterns("/hello/*");
+    registry.addInterceptor(new VisitTimeInterceptor());
   }
 
   @Override
