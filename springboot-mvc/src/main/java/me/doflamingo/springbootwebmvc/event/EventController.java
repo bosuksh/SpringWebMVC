@@ -1,7 +1,5 @@
 package me.doflamingo.springbootwebmvc.event;
 
-import org.h2.engine.Mode;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,11 +7,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @SessionAttributes("event")
@@ -45,44 +40,45 @@ public class EventController {
     return "event removed";
   }
 
-  @PostMapping("/events")
-  public String creatEvent(@Validated @ModelAttribute Event event,
-                           BindingResult bindingResult,
-                           SessionStatus sessionStatus) {
+  @PostMapping("/events/name")
+  public String creatEventName(@Validated @ModelAttribute Event event,
+                           BindingResult bindingResult){
     if(bindingResult.hasErrors()) {
-      sessionStatus.setComplete();
-      return "events/eventForm";
+      return "events/eventForm-name";
     }
-    return "redirect:events/list";
+    return "redirect:/events/form/limit";
   }
 
-  @PostMapping("/event")
-  @ResponseBody
-  public Event creatEventWitParam(@RequestParam Map<String, String> map) {
-    Event event = new Event();
-    event.setName(map.get("name"));
-    event.setLimitOfEnrollment(Integer.parseInt(map.get("limitOfEnrollment")));
-    return event;
+  @GetMapping("/events/form/name")
+  public String eventsFormName(Model model) {
+    model.addAttribute("event", new Event());
+    return "events/eventForm-name";
   }
 
-  @GetMapping("/events/form")
-  public String eventsForm(Model model, HttpSession httpSession ) {
-    Event event = new Event();
-    event.setLimitOfEnrollment(10);
+  @PostMapping("/events/limit")
+  public String creatEventLimit(@Validated @ModelAttribute Event event,
+                           BindingResult bindingResult){
+    if(bindingResult.hasErrors()) {
+      return "events/eventForm-limit";
+    }
+    return "redirect:/events/list";
+  }
+
+  @GetMapping("/events/form/limit")
+  public String eventsFormList(@ModelAttribute Event event, Model model) {
     model.addAttribute("event", event);
-    return "events/eventForm";
+    return "events/eventForm-limit";
   }
 
   @GetMapping("/events/list")
-  public String getEventList(Model model) {
-
-    Event event = new Event();
-    event.setName("spring");
-    event.setLimitOfEnrollment(10);
-    List<Event> eventList = new ArrayList<>();
-    eventList.add(event);
-
-    model.addAttribute("eventList", eventList);
+  public String getEventList(Model model, SessionStatus sessionStatus) {
+    if(model.containsAttribute("event")) {
+      Event event = (Event) model.getAttribute("event");
+      List<Event> eventList = new ArrayList<>();
+      eventList.add(event);
+      sessionStatus.setComplete();
+      model.addAttribute("eventList", eventList);
+    }
     return "events/list";
   }
 
