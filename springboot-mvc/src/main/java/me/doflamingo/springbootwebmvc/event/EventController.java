@@ -1,5 +1,6 @@
 package me.doflamingo.springbootwebmvc.event;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,19 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @SessionAttributes("event")
+@RequiredArgsConstructor
 public class EventController {
 
   private final EventService eventService;
-
-  public EventController(EventService eventService) {
-    this.eventService = eventService;
-  }
+  private final AnotherValidator anotherValidator;
 
   @InitBinder
   public void initEventBinder(WebDataBinder webDataBinder) {
@@ -54,11 +54,13 @@ public class EventController {
   }
 
   @PostMapping("/events/name")
-  public String creatEventName(@Validated @ModelAttribute Event event,
+  public String creatEventName(@Valid @ModelAttribute Event event,
                            BindingResult bindingResult){
+    anotherValidator.validate(event, bindingResult);
     if(bindingResult.hasErrors()) {
       return "events/eventForm-name";
     }
+
     return "redirect:/events/form/limit";
   }
 
