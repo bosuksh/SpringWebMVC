@@ -61,13 +61,13 @@ public class EventController {
   public String creatEventLimit(@Validated @ModelAttribute Event event,
                                 BindingResult bindingResult,
                                 SessionStatus sessionStatus,
-                                RedirectAttributes redirectAttributes){
+                                Model model){
     if(bindingResult.hasErrors()) {
       return "events/eventForm-limit";
     }
     sessionStatus.setComplete();
-    redirectAttributes.addAttribute("name",event.getName());
-    redirectAttributes.addAttribute("limitOfEnrollment",event.getLimitOfEnrollment());
+    model.addAttribute("name", event.getName());
+    model.addAttribute("limitOfEnrollment", event.getLimitOfEnrollment());
     return "redirect:/events/list";
   }
 

@@ -1,2 +1,6 @@
 server:
   port: 8081
+
+spring:
+  mvc:
+    ignore-default-model-on-redirect: false
