@@ -23,21 +23,6 @@ public class EventController {
   private final EventService eventService;
   private final AnotherValidator anotherValidator;
 
-  @ExceptionHandler
-  public String eventError(EventException exception, Model model) {
-    model.addAttribute("message", "Event Error");
-    return "error";
-  }
-
-  @InitBinder
-  public void initEventBinder(WebDataBinder webDataBinder) {
-    webDataBinder.setDisallowedFields("id");
-    webDataBinder.addValidators(new NameValidator());
-  }
-  @ModelAttribute
-  public void addModel(Model model) {
-    model.addAttribute("categories", List.of("A","B","C","D"));
-  }
 
   @GetMapping("/events") public String getList(Model model) {
     model.addAttribute("events", eventService.getList());
