@@ -7,6 +7,7 @@
 <body>
     <form action="#" th:action="@{/events/name}" th:object="${event}" method="post">
         <p th:if="${#fields.hasErrors()}" th:errors = "*{name}">Incorrect data</p>
+        Id: <input type="text" th:title="id" th:field="*{id}">
         Name: <input type="text" th:title="name" th:field="*{name}">
         <input type="submit" value="create">
     </form>
