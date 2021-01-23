@@ -4,6 +4,7 @@ import me.doflamingo.springbootwebmvc.event.VisitTimeInterceptor;
 import me.doflamingo.springbootwebmvc.person.AnotherInterceptor;
 import me.doflamingo.springbootwebmvc.person.GreetingInterceptor;
 import me.doflamingo.springbootwebmvc.person.Person;
+import org.apache.tika.Tika;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
@@ -24,6 +25,10 @@ public class WebConfig implements WebMvcConfigurer {
     return marshaller;
   }
 
+  @Bean
+  public Tika tika() {
+    return new Tika();
+  }
 
   /**
    * GetMapping 없이 view와 viewController를 연결해주는 효과가 있다.

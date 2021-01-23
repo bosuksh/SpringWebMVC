@@ -1,5 +1,6 @@
 package me.doflamingo.springbootwebmvc.file;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -19,10 +20,11 @@ import java.io.File;
 import java.io.IOException;
 
 @Controller
+@RequiredArgsConstructor
 public class FileController {
 
-  @Autowired
-  private ResourceLoader resourceLoader;
+  private final ResourceLoader resourceLoader;
+  private final Tika tika;
 
   @GetMapping("/files")
   public String getFileForm(Model model) {
@@ -43,7 +45,6 @@ public class FileController {
   public ResponseEntity<?> downloadFile(@PathVariable String fileName) throws IOException {
     Resource resource = resourceLoader.getResource("classpath:"+fileName);
     File file = resource.getFile();
-    Tika tika = new Tika();
     String mediaType = tika.detect(file);
     return ResponseEntity.ok()
       .header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\""+fileName+"\"")
