@@ -50,4 +50,25 @@ class EventApiControllerTest {
       .andExpect(jsonPath("name").value("spring"))
       .andExpect(jsonPath("limitOfEnrollment").value(100));
   }
+
+  @Test
+  public void createEventWithInvalidValue() throws Exception {
+    //given
+    Event event = new Event();
+    event.setId(1);
+    event.setName("spring");
+    event.setLimitOfEnrollment(-100);
+
+    String json = objectMapper.writeValueAsString(event);
+    //when
+    mockMvc.perform(post("/api/events")
+      .contentType(MediaType.APPLICATION_JSON)
+      .content(json))
+    //then
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(jsonPath("id").value(1))
+      .andExpect(jsonPath("name").value("spring"))
+      .andExpect(jsonPath("limitOfEnrollment").value(-100));
+  }
 }
