@@ -1,24 +1,25 @@
 package me.doflamingo.springbootwebmvc.event;
 
 import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController
+@Controller
 @RequestMapping("/api/events")
 public class EventApiController {
 
   @PostMapping
-  public Event createEvent(@RequestBody @Valid Event event, BindingResult bindingResult) {
+  @ResponseBody
+  public ResponseEntity<Event> createEvent(@RequestBody @Valid Event event, BindingResult bindingResult) {
     if(bindingResult.hasErrors()) {
       bindingResult.getFieldErrors().forEach(System.out::println);
+      return ResponseEntity.badRequest().build();
     }
     //save
-    return event;
+    return ResponseEntity.ok(event);
   }
 }

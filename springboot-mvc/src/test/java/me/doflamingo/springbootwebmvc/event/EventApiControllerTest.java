@@ -66,9 +66,8 @@ class EventApiControllerTest {
       .content(json))
     //then
       .andDo(print())
-      .andExpect(status().isOk())
-      .andExpect(jsonPath("id").value(1))
-      .andExpect(jsonPath("name").value("spring"))
-      .andExpect(jsonPath("limitOfEnrollment").value(-100));
+      .andExpect(status().isBadRequest())
+    ;
+
   }
 }
