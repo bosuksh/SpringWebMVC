@@ -23,6 +23,12 @@ public class EventController {
   private final EventService eventService;
   private final AnotherValidator anotherValidator;
 
+  @ExceptionHandler
+  public String eventError(EventException exception, Model model) {
+    model.addAttribute("message", "Event Error");
+    return "error";
+  }
+
   @InitBinder
   public void initEventBinder(WebDataBinder webDataBinder) {
     webDataBinder.setDisallowedFields("id");
@@ -66,8 +72,9 @@ public class EventController {
 
   @GetMapping("/events/form/name")
   public String eventsFormName(Model model) {
-    model.addAttribute("event", new Event());
-    return "events/eventForm-name";
+    throw new EventException();
+//    model.addAttribute("event", new Event());
+//    return "events/eventForm-name";
   }
 
   @PostMapping("/events/limit")
