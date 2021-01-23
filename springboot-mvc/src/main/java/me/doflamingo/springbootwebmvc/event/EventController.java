@@ -17,7 +17,7 @@ import java.util.List;
 @SessionAttributes("event")
 public class EventController {
 
-  private EventService eventService;
+  private final EventService eventService;
 
   public EventController(EventService eventService) {
     this.eventService = eventService;
@@ -26,6 +26,7 @@ public class EventController {
   @InitBinder
   public void initEventBinder(WebDataBinder webDataBinder) {
     webDataBinder.setDisallowedFields("id");
+    webDataBinder.addValidators(new NameValidator());
   }
   @ModelAttribute
   public void addModel(Model model) {
