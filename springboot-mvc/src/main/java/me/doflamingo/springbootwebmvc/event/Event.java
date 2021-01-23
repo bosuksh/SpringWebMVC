@@ -1,6 +1,7 @@
 package me.doflamingo.springbootwebmvc.event;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.constraints.Min;
@@ -18,6 +19,7 @@ public class Event {
   private String name;
   @Min(value = 0, message = "Limit of Enrollment must be larger than 0.")
   private int limitOfEnrollment;
+  @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss")
   private LocalDateTime startDateTime;
   private LocalDateTime endDateTime;
 }

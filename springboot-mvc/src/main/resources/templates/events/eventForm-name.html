@@ -9,6 +9,7 @@
         <p th:if="${#fields.hasErrors()}" th:errors = "*{name}">Incorrect data</p>
         Id: <input type="text" th:title="id" th:field="*{id}">
         Name: <input type="text" th:title="name" th:field="*{name}">
+        Time: <input type="text" th:title="startDateTime" th:field="*{startDateTime}">
         <input type="submit" value="create">
     </form>
 </body>
