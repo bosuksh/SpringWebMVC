@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -58,10 +59,15 @@ public class EventController {
 
   @PostMapping("/events/limit")
   public String creatEventLimit(@Validated @ModelAttribute Event event,
-                           BindingResult bindingResult){
+                                BindingResult bindingResult,
+                                SessionStatus sessionStatus,
+                                RedirectAttributes redirectAttributes){
     if(bindingResult.hasErrors()) {
       return "events/eventForm-limit";
     }
+    sessionStatus.setComplete();
+    redirectAttributes.addAttribute("name",event.getName());
+    redirectAttributes.addAttribute("limitOfEnrollment",event.getLimitOfEnrollment());
     return "redirect:/events/list";
   }
 
@@ -72,15 +78,13 @@ public class EventController {
   }
 
   @GetMapping("/events/list")
-  public String getEventList(Model model, SessionStatus sessionStatus, @SessionAttribute("visitTime") LocalDateTime visitTime) {
+  public String getEventList(Model model,
+                             @ModelAttribute("newEvent") Event newEvent,
+                             @SessionAttribute("visitTime") LocalDateTime visitTime) {
     System.out.println(visitTime);
-    if(model.containsAttribute("event")) {
-      Event event = (Event) model.getAttribute("event");
-      List<Event> eventList = new ArrayList<>();
-      eventList.add(event);
-      sessionStatus.setComplete();
-      model.addAttribute("eventList", eventList);
-    }
+    List<Event> eventList = new ArrayList<>();
+    eventList.add(newEvent);
+    model.addAttribute("eventList", eventList);
     return "events/list";
   }
 
