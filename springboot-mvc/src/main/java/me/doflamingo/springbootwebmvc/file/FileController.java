@@ -2,7 +2,6 @@ package me.doflamingo.springbootwebmvc.file;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.tika.Tika;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
