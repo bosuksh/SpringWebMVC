@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import static org.hamcrest.Matchers.notNullValue;
@@ -182,5 +183,22 @@ class EventControllerTest {
       .andExpect(status().isOk())
     ;
 
+  }
+
+  @Test
+  public void getEventList() throws Exception {
+    //given
+    Event event = new Event();
+    event.setName("spring");
+    event.setLimitOfEnrollment(100);
+    //when
+    this.mockMvc.perform(get("/events/list")
+      .sessionAttr("visitTime", LocalDateTime.now())
+      .flashAttr("event",event))
+    //then
+      .andDo(print())
+      .andExpect(status().isOk())
+      .andExpect(xpath("//tr").nodeCount(2))
+    ;
   }
 }
