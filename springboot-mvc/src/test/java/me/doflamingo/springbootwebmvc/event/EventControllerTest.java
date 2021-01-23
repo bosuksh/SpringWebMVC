@@ -198,6 +198,7 @@ class EventControllerTest {
     //then
       .andDo(print())
       .andExpect(status().isOk())
+      .andExpect(model().attributeExists("categories"))
       .andExpect(xpath("//tr").nodeCount(2))
     ;
   }

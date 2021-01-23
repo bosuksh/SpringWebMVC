@@ -22,6 +22,11 @@ public class EventController {
     this.eventService = eventService;
   }
 
+  @ModelAttribute
+  public void addModel(Model model) {
+    model.addAttribute("categories", List.of("A","B","C","D"));
+  }
+
   @GetMapping("/events") public String getList(Model model) {
     model.addAttribute("events", eventService.getList());
     return "events/list";
