@@ -61,13 +61,12 @@ public class EventController {
   public String creatEventLimit(@Validated @ModelAttribute Event event,
                                 BindingResult bindingResult,
                                 SessionStatus sessionStatus,
-                                Model model){
+                                RedirectAttributes redirectAttributes){
     if(bindingResult.hasErrors()) {
       return "events/eventForm-limit";
     }
     sessionStatus.setComplete();
-    model.addAttribute("name", event.getName());
-    model.addAttribute("limitOfEnrollment", event.getLimitOfEnrollment());
+    redirectAttributes.addFlashAttribute("event", event);
     return "redirect:/events/list";
   }
 
@@ -79,7 +78,7 @@ public class EventController {
 
   @GetMapping("/events/list")
   public String getEventList(Model model,
-                             @ModelAttribute("newEvent") Event newEvent,
+                             @ModelAttribute Event newEvent,
                              @SessionAttribute("visitTime") LocalDateTime visitTime) {
     System.out.println(visitTime);
     List<Event> eventList = new ArrayList<>();
